@@ -92,9 +92,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="max-w-md mx-auto px-3 pb-28">
 
-    <div class="title">⚾ 出欠連絡</div>
+    <div class="text-xl font-bold mb-3 flex items-center gap-2">
+      ⚾ 出欠連絡
+    </div>
 
     <DatePicker
       :date="selectedDate"
@@ -115,40 +117,16 @@ onMounted(() => {
 
     <SubmitBar @submit="submit" />
 
-    <div v-if="toast" class="toast">{{ toast }}</div>
+    <!-- ★ここ修正 -->
+    <div v-if="toast" class="toast toast-top toast-center z-50">
+      <div class="alert alert-success">
+        <span>{{ toast }}</span>
+      </div>
+    </div>
 
   </div>
 </template>
 
 <style scoped>
-.container {
-  padding: 12px 12px 100px;
-}
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.toast {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  
-  background: #2563eb;
-  color: white;
-  
-  padding: 12px 20px;
-  border-radius: 12px;
-  
-  font-weight: bold;
-  
-  width: auto;          /* ← 重要 */
-  max-width: 80%;       /* ← 重要 */
-  text-align: center;
-  
-  z-index: 9999;
-}
 </style>

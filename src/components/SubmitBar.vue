@@ -4,7 +4,7 @@ const emit = defineEmits(['submit'])
 
 <template>
   <div class="fixed bottom-0 left-0 w-full p-3 bg-base-200 shadow-2xl">
-    <button class="btn btn-primary w-full h-14 text-lg" @click="emit('submit')">
+    <button class="btn btn-primary w-full h-16 text-lg font-bold" @click="emit('submit')">
       送信する
     </button>
   </div>

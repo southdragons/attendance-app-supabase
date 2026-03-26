@@ -6,7 +6,6 @@ const emit = defineEmits(['add','update','remove'])
 <template>
   <div>
 
-    <!-- メンバー入力 -->
     <div
       v-for="(m, i) in members"
       :key="m.id"
@@ -14,36 +13,33 @@ const emit = defineEmits(['add','update','remove'])
     >
       <div class="card-body">
 
-        <!-- タイトル -->
         <div class="font-bold text-lg mb-2">
           {{ i + 1 }}人目
         </div>
 
-        <!-- 名前 -->
         <input
           v-model="m.name"
           placeholder="名前を入力"
           class="input input-bordered w-full text-lg mb-3"
         />
 
-        <!-- ステータス -->
         <div class="grid grid-cols-2 gap-2">
 
           <button
-            class="btn h-14 text-lg"
+            class="h-14 text-lg font-bold border-2 rounded-lg flex items-center justify-center active:scale-95 transition"
             :class="m.status === '欠席'
-              ? 'btn-error'
-              : 'btn-outline'"
+              ? 'bg-red-500 text-white border-red-500'
+              : 'bg-white border-gray-300 text-gray-500'"
             @click="emit('update', m.id, 'status', '欠席')"
           >
             ❌ 欠席
           </button>
 
           <button
-            class="btn h-14 text-lg"
+            class="h-14 text-lg font-bold border-2 rounded-lg flex items-center justify-center active:scale-95 transition"
             :class="m.status === '10時参加'
-              ? 'btn-warning'
-              : 'btn-outline'"
+              ? 'bg-yellow-400 text-white border-yellow-400'
+              : 'bg-white border-gray-300 text-gray-500'"
             @click="emit('update', m.id, 'status', '10時参加')"
           >
             ⏰ 10時参加
@@ -51,7 +47,6 @@ const emit = defineEmits(['add','update','remove'])
 
         </div>
 
-        <!-- 削除 -->
         <button
           v-if="members.length > 1"
           class="btn btn-sm btn-error mt-3"
@@ -63,9 +58,9 @@ const emit = defineEmits(['add','update','remove'])
       </div>
     </div>
 
-    <!-- 追加 -->
     <button
       class="btn btn-outline w-full h-14 text-lg mt-2"
+      @click="emit('add')"
     >
       ＋ 兄弟を追加
     </button>
