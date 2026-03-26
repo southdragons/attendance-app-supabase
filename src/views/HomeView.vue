@@ -12,6 +12,7 @@ const members = ref([{ id: Date.now(), name: '', status: null }])
 const selectedDate = ref(new Date())
 const records = ref([])
 const toast = ref('')
+const loading = ref(false)
 
 /* userId */
 function initUserId() {
@@ -60,19 +61,33 @@ async function submit() {
     return
   }
 
-  await fetch(GAS_URL, {
-    method: 'POST',
-    body: JSON.stringify({
-      type: 'create',
-      userId: userId.value,
-      date: formatDate(selectedDate.value),
-      members: valid
-    })
-  })
+  loading.value = true  // ★追加
 
-  toast.value = '送信完了'
-  members.value = [{ id: Date.now(), name: '', status: null }]
-  fetchRecords()
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'create',
+        userId: userId.value,
+        date: formatDate(selectedDate.value),
+        members: valid
+      })
+    })
+
+    toast.value = '送信完了'
+
+    setTimeout(() => {
+      toast.value = ''
+    }, 2000)
+
+    members.value = [{ id: Date.now(), name: '', status: null }]
+    fetchRecords()
+
+  } catch (e) {
+    toast.value = 'エラーが発生しました'
+  }
+
+  loading.value = false  // ★追加
 }
 
 /* 削除 */
@@ -115,7 +130,10 @@ onMounted(() => {
       @delete="deleteRecord"
     />
 
-    <SubmitBar @submit="submit" />
+    <SubmitBar
+      :loading="loading"
+      @submit="submit"
+    />
 
     <!-- ★ここ修正 -->
     <div v-if="toast" class="toast toast-top toast-center z-50">
