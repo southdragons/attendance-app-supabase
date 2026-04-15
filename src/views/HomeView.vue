@@ -7,7 +7,11 @@ import SubmitBar from '../components/SubmitBar.vue'
 
 const userId = ref('')
 const members = ref([{ id: Date.now(), name: '', status: null }])
-const selectedDate = ref(new Date())
+const selectedDate = ref((() => {
+  const now = new Date()
+  now.setHours(12, 0, 0, 0)
+  return now
+})())
 const loading = ref(false)
 const toast = ref('')
 
@@ -37,7 +41,10 @@ function removeMember(id) {
 }
 
 function formatDate(d) {
-  return d.toISOString().split('T')[0]
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
 }
 
 async function submit() {

@@ -7,13 +7,20 @@ const emit = defineEmits(['change'])
 function update(e) {
   emit('change', new Date(e.target.value))
 }
+
+function formatDate(d) {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
 </script>
 
 <template>
   <div class="card">
     <input
       type="date"
-      :value="props.date.toISOString().split('T')[0]"
+      :value="formatDate(props.date)"
       @input="update"
       class="input"
     />
