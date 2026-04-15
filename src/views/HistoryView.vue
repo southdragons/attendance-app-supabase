@@ -16,16 +16,14 @@ async function fetchRecords() {
   loading.value = true
   try {
     const now = new Date()
-    const days30ago = new Date(now - 30 * 24 * 60 * 60 * 1000)
-      .toISOString().split('T')[0]
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
 
     const { data, error } = await supabase
       .from('attendance')
       .select('*')
       .eq('user_id', userId.value)
-      .gte('date', days30ago)
+      .gte('date', today)
       .order('date', { ascending: false })
-
     if (error) throw error
     records.value = data || []
   } catch (e) {
