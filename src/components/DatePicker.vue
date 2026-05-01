@@ -18,6 +18,7 @@ function formatDate(d) {
 
 <template>
   <div class="card">
+    <label class="label">📅 日付を選択してください</label>
     <input
       type="date"
       :value="formatDate(props.date)"
@@ -29,6 +30,12 @@ function formatDate(d) {
 
 <style scoped>
 .card { margin-bottom: 25px; }
+.label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
 .input {
   width: 100%;
   height: 25%;
